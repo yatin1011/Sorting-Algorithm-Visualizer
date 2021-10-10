@@ -42,7 +42,7 @@ class TrackedArray():
 plt.rcParams["figure.figsize"] = (12, 8)
 plt.rcParams["font.size"] = 16
 
-FPS = 60.0
+FPS = 200.0
 
 N = 30
 arr = np.round(np.linspace(0, 1000, N), 0)
@@ -116,6 +116,12 @@ def update(frame):
     for (rectangle, height) in zip(container.patches, arr.full_copies[frame]):
         rectangle.set_height(height)
         rectangle.set_color('#1f77b4')
+    
+    idx, op = arr.GetActivity(frame)
+    if op == 'get':
+        container.patches[idx].set_color("magenta")
+    elif op == 'set':
+        container.patches[idx].set_color("magenta")
     
     return (*container,)
 
